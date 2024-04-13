@@ -47,6 +47,14 @@ class ApplicationController {
     );
     return res.status(200).json(application);
   }
+
+  async generateQrCode(req, res) {
+    const qrCodeData = req.body;
+
+    const qrcode = await applicationService.generateQrCode(qrCodeData);
+
+    res.send(`<img src="${qrcode}" alt="QR Code">`);
+  }
 }
 
 export default new ApplicationController();

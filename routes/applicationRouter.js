@@ -32,4 +32,9 @@ router.patch(
   catchAsync(applicationController.verifyApplication),
 );
 
+router.post(
+  '/generate-qrcode',
+  catchAsync(applicationController.generateQrCode),
+);
+
 export default router;

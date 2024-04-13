@@ -20,7 +20,10 @@ class AuthService {
     });
     const moderatorDto = new ModeratorDto(moderator);
     const tokens = tokenService.generateTokens({ ...moderatorDto });
-    await tokenService.saveToken(moderator.id, tokens.refreshToken);
+    await tokenService.saveTokenForModerators(
+      moderator.id,
+      tokens.refreshToken,
+    );
     return {
       id: moderator.id,
       firstName: moderator.firstName,
@@ -38,9 +41,13 @@ class AuthService {
       );
     const checkPassword = await bcrypt.compare(password, moderator.password);
     if (!checkPassword) throw createError.BadRequest(`Wrong password!`);
-    const moderatorDto = new ModeratorDto(Moderator);
+    const moderatorDto = new ModeratorDto(moderator);
+
     const tokens = tokenService.generateTokens({ ...moderatorDto });
-    await tokenService.saveToken(moderator.id, tokens.refreshToken);
+    await tokenService.saveTokenForModerators(
+      moderator.id,
+      tokens.refreshToken,
+    );
     return {
       id: moderator.id,
       firstName: moderator.firstName,
@@ -59,7 +66,10 @@ class AuthService {
     });
     const moderatorDto = new ModeratorDto(moderator);
     const tokens = tokenService.generateTokens({ ...moderatorDto });
-    await tokenService.saveToken(moderator.id, tokens.refreshToken);
+    await tokenService.saveTokenForModerators(
+      moderator.id,
+      tokens.refreshToken,
+    );
     return {
       id: moderator.id,
       firstName: moderator.firstName,

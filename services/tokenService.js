@@ -16,10 +16,21 @@ class TokenService {
     };
   }
 
-  async saveToken(moderatorId, refreshToken) {
+  async saveTokenForModerators(moderatorId, refreshToken) {
     let token = await Token.findOne({ where: { moderatorId } });
     if (!token) {
       token = await Token.create({ moderatorId, refreshToken });
+    } else {
+      token.refreshToken = refreshToken;
+      await token.save();
+    }
+    return token;
+  }
+
+  async saveTokenForAdmins(adminId, refreshToken) {
+    let token = await Token.findOne({ where: { adminId } });
+    if (!token) {
+      token = await Token.create({ adminId, refreshToken });
     } else {
       token.refreshToken = refreshToken;
       await token.save();

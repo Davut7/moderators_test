@@ -13,7 +13,6 @@ export default async (req, res, next) => {
       return next(createError.Unauthorized('Invalid authorization header'));
     }
     const accessToken = tokenParts[1];
-    console.log(accessToken);
     const verifiedUser = tokenService.verifyAccessToken(accessToken);
     if (!verifiedUser) {
       return next(createError.Unauthorized('Invalid access token'));
