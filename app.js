@@ -7,6 +7,8 @@ import helmet from 'helmet';
 import errorHandler from './middleware/errorMiddleware.js';
 import indexRouter from './routes/index.js';
 import path from 'path';
+import swaggerUi from 'swagger-ui-express';
+import specs from './swagger.js';
 
 const app = express();
 const cookieSecret = process.env.COOKIE_SECRET;
@@ -28,14 +30,15 @@ app.use(helmet());
 const __dirname = path.dirname(new URL(import.meta.url).pathname);
 
 app.get('/image/:imageName', (req, res) => {
-	const { imageName } = req.params;
+  const { imageName } = req.params;
 
-	const image = path.join(__dirname, 'uploads', imageName);
+  const image = path.join(__dirname, 'uploads', imageName);
 
-	res.sendFile(image);
+  res.sendFile(image);
 });
 
 app.use('/api', indexRouter);
+app.use('/api/docs', swaggerUi.serve, swaggerUi.setup(specs));
 
 app.use(errorHandler);
 export default app;
